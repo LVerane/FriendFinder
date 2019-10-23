@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- <script type="text/javascript" src="survey.js"></script> -->
+    <!-- <script type="text/javascript" src="logic.js"></script> -->
 
 </head>
 
@@ -22,7 +22,7 @@
         <h1>Answer the following Questions</h1>
         <h3>Select 1 for "strongly agree" and 5 for "strongly disagree"</h3>
 
-        <form role="form">
+        <!-- <form role="form"> -->
             <div class="form-group">
                 <label for="user-name">Your Name</label>
                 <input type="text" class="form-control" id="user-name">
@@ -32,7 +32,7 @@
                 <input type="text" class="form-control" id="user-picture">
             </div>
             <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-        </form>
+        <!-- </form> -->
 
         <div id="allQuestions"></div>
 
@@ -47,7 +47,7 @@
     </div>
 
     <script type="text/javascript">
-        var surveyQuestions = ["Turtles are awesome", "I like spending Sundays alone", "Sushi is better than pizza", "We need more time for this homework", "Firewood smells nice"]
+        var surveyQuestions = ["Turtles are awesome", "I like spending Sundays alone", "Sushi is better than pizza", "We need more time for this homework", "Firewood smells nice", "1", "2", "3", "4", "5"]
 
         generateHtml()
 
@@ -78,7 +78,7 @@
                 // var userAnswer = $('#question' + i).val()//children("input:checked").val();
                 // console.log(userAnswer)
             }
-            console.log(answerArray)
+            console.log(typeof(answerArray[0]))
 
             var newUser = {
                 userName: $("#user-name").val().trim(),
@@ -87,9 +87,10 @@
             };
             console.log(newUser)
 
-            $.post("/api/friends", newUser, function () {
+            $.post("/api/friends", newUser, function (data) {
                 $("#user-name").val("");
                 $("#user-picture").val("");
+                console.log(data)
             })
 
         });

@@ -19,6 +19,7 @@ module.exports = function (app) {
 
     app.get("/api/friends", function (req, res) {
         res.json(friendsArray);
+
     });
 
     // API POST Requests
@@ -33,7 +34,43 @@ module.exports = function (app) {
         // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
         // It will do this by sending out the value "true" have a table
         // req.body is available since we're using the body parsing middleware
+
+        // req.body.userAnswers.forEach(element => {
+        //     element = parseInt(element);
+        //     console.log(element)
+        //     console.log(req.body.userAnswers)
+        // });
+
+        for (var i = 0; i < req.body.userAnswers.length; i++) {
+            req.body.userAnswers[i] = parseInt(req.body.userAnswers[i])
+            // console.log(req.body.userAnswers[i])
+        }
+        console.log(req.body.userAnswers)
+
+        // console.log(friendsArray)
+
+        var topMatch = { value: Infinity }
+        for (var i = 0; i < friendsArray.length; i++) {//-1 to not look at the last one
+            var newTest = 0;
+            for (var j = 0; j < friendsArray[i].userAnswers.length; j++) {
+                newTest += Math.abs(friendsArray[i].userAnswers[j] - req.body.userAnswers[j]);//friendsArray.length-1 to comapre to the last one
+            }
+            if (newTest < topMatch.value) {
+                topMatch.value = newTest;
+                topMatch.position = i;
+                // topMatch.name = friendsArray[i].userName;
+            }
+            console.log(topMatch)
+        }
+
+        var bestMatch = friendsArray[topMatch.position]
+
+        console.log(bestMatch.userName)
+        // res.json(bestMatch.userName)
+
+        // console.log(`Your best match is ${bestMatch.userName}`)
+        // res.json(true);
+
         friendsArray.push(req.body);
-        res.json(true);
     });
 };

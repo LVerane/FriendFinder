@@ -7,9 +7,9 @@
 
 var friendsArray = [
     {
-        "userName":"Ahmed",
-        "userPicture":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
-        "userAnswers":[
+        "userName": "Ahmed",
+        "userPicture": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+        "userAnswers": [
             5,
             1,
             4,
@@ -20,10 +20,55 @@ var friendsArray = [
             5,
             4,
             1
-          ]
-      }
-  ];
-    
-  // Note how we export the array. This makes it accessible to other files using require.
-  module.exports = friendsArray;
-  
+        ]
+    }, {
+        "userName": "Peter",
+        "userPicture": "https://",
+        "userAnswers": [
+            5,
+            3,
+            2,
+            4,
+            1,
+            5,
+            2,
+            3,
+            4,
+            2
+        ]
+    }, {
+        "userName": "Bob",
+        "userPicture": "https://",
+        "userAnswers": [
+            3,
+            2,
+            1,
+            4,
+            4,
+            5,
+            2,
+            1,
+            4,
+            2
+        ]
+
+    }, {
+        "userName": "Ahmed's clone",
+        "userPicture": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+        "userAnswers": [
+            5,
+            1,
+            4,
+            4,
+            5,
+            1,
+            2,
+            5,
+            4,
+            1
+        ]
+    }
+];
+
+// Note how we export the array. This makes it accessible to other files using require.
+module.exports = friendsArray;
