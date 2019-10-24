@@ -8,7 +8,7 @@
 var friendsArray = [
     {
         "userName": "Ahmed",
-        "userPicture": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+        "userPicture": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/mel-gibson-lead-1551913147.jpg?crop=0.459xw:0.919xh;0.0195xw,0.0292xh&resize=640:*",
         "userAnswers": [
             5,
             1,
@@ -23,7 +23,7 @@ var friendsArray = [
         ]
     }, {
         "userName": "Peter",
-        "userPicture": "https://",
+        "userPicture": "https://www.biography.com/.image/t_share/MTE5NDg0MDU1MjQ5OTc4ODk1/chuck-norris-15720761-1-402.jpg",
         "userAnswers": [
             5,
             3,
@@ -38,7 +38,7 @@ var friendsArray = [
         ]
     }, {
         "userName": "Bob",
-        "userPicture": "https://",
+        "userPicture": "https://www.biography.com/.image/t_share/MTE5NTU2MzE2MzU1NzI0ODEx/keanu-reeves-9454211-1-402.jpg",
         "userAnswers": [
             3,
             2,
@@ -50,22 +50,6 @@ var friendsArray = [
             1,
             4,
             2
-        ]
-
-    }, {
-        "userName": "Ahmed's clone",
-        "userPicture": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
-        "userAnswers": [
-            5,
-            1,
-            4,
-            4,
-            5,
-            1,
-            2,
-            5,
-            4,
-            1
         ]
     }
 ];

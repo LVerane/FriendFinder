@@ -8,10 +8,25 @@
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- <script type="text/javascript" src="logic.js"></script> -->
+    <style type="text/css">
+        h3,
+        button {
+            margin: 20px auto;
+        }
+
+        #allQuestions {
+            font-size: 28px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 
 </head>
 
@@ -20,23 +35,32 @@
     <div class="container">
 
         <h1>Answer the following Questions</h1>
-        <h3>Select 1 for "strongly agree" and 5 for "strongly disagree"</h3>
+        <h3>Select 5 for "strongly agree" and 1 for "strongly disagree"</h3>
 
         <!-- <form role="form"> -->
-            <div class="form-group">
-                <label for="user-name">Your Name</label>
-                <input type="text" class="form-control" id="user-name">
-            </div>
-            <div class="form-group">
-                <label for="user-picture">Link to Picture</label>
-                <input type="text" class="form-control" id="user-picture">
-            </div>
-            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+        <div class="form-group">
+            <label for="user-name">Your Name</label>
+            <input type="text" class="form-control" id="user-name">
+        </div>
+        <div class="form-group">
+            <label for="user-picture">Link to Picture</label>
+            <input type="text" class="form-control" id="user-picture">
+        </div>
+        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
         <!-- </form> -->
 
         <div id="allQuestions"></div>
 
-        <button id="submit">Submit</button>
+        <button id="submit" type="button" class="btn btn-primary" data-toggle="modal"
+            data-target=".bd-example-modal-lg">Submit</button>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div id="best-match" class="modal-content">
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">
             <div class="container">
@@ -47,22 +71,18 @@
     </div>
 
     <script type="text/javascript">
-        var surveyQuestions = ["Turtles are awesome", "I like spending Sundays alone", "Sushi is better than pizza", "We need more time for this homework", "Firewood smells nice", "1", "2", "3", "4", "5"]
+        var surveyQuestions = ["Turtles are awesome", "I like spending Sundays alone", "Sushi is better than pizza", "We need more time for this homework", "Firewood smells nice", "Do you want to build a snowman?", "New Zealand is a great country", "Four hours of sleep are more than enough", "I love to fill forms", "Shrek is better than Lord of the Rings"]
 
         generateHtml()
 
         function generateHtml() {
-            // $("#instruction").html('Select the right answers and click Submit');
-            // $("#score").html("");
             for (i = 0; i < surveyQuestions.length; i++) {
                 var newQuestion = $("<h3>").append(surveyQuestions[i]);
                 $("#allQuestions").append(newQuestion);
                 var newAnswer = $(`<select id=question${i} name=${i}>`);
-                // var newAnswer = $('<div class=answerOption id=question' + i + '>');
 
                 for (j = 0; j < 5; j++) {
                     newAnswer.append(`<option value=${j + 1}>${j + 1}</option>`);
-                    // newAnswer.append('<input type=radio name=answer' + i + ' value=' + j + '>' + (j+1));
                     $("#allQuestions").append(newAnswer);
                 }
             }
@@ -72,26 +92,37 @@
         $("#submit").on("click", function () {
             event.preventDefault();
 
-            var answerArray = [];
-            for (i = 0; i < surveyQuestions.length; i++) {
-                answerArray.push(parseInt($('#question' + i).val()))
-                // var userAnswer = $('#question' + i).val()//children("input:checked").val();
-                // console.log(userAnswer)
+            if (!$("#user-name").val().trim() || !$("#user-picture").val().trim()) {
+                $("#best-match").html("<h3>Name and picture link are required</h3>");
+            } else {
+                // console.log($("#user-name").val().trim())
+                // console.log($("#user-picture").val().trim())
+
+                var answerArray = [];
+                for (i = 0; i < surveyQuestions.length; i++) {
+                    answerArray.push(parseInt($('#question' + i).val()))
+                    // var userAnswer = $('#question' + i).val()//children("input:checked").val();
+                    // console.log(userAnswer)
+                }
+
+                var newUser = {
+                    userName: $("#user-name").val().trim(),
+                    userPicture: $("#user-picture").val().trim(),
+                    userAnswers: answerArray,
+                };
+
+                $.post("/api/friends", newUser, function (data) {
+                    $("#user-name").val("");
+                    $("#user-picture").val("");
+                    // console.log(data)
+                    var image = $(`<img src=${data.userPicture}>`)
+                    var name = $(`<h3>${data.userName}</h3>`)
+
+                    $("#best-match").html("");
+                    $("#best-match").append(name)
+                    $("#best-match").append(image)
+                })
             }
-            console.log(typeof(answerArray[0]))
-
-            var newUser = {
-                userName: $("#user-name").val().trim(),
-                userPicture: $("#user-picture").val().trim(),
-                userAnswers: answerArray,
-            };
-            console.log(newUser)
-
-            $.post("/api/friends", newUser, function (data) {
-                $("#user-name").val("");
-                $("#user-picture").val("");
-                console.log(data)
-            })
 
         });
     </script>
