@@ -49,10 +49,7 @@ module.exports = function (app) {
         }
 
         var bestMatch = friendsArray[topMatch.position]
-        console.log(bestMatch)
-
         friendsArray.push(req.body);
-
         res.send(bestMatch)
     });
 };

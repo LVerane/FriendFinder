@@ -12,21 +12,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <style type="text/css">
-        h3,
-        button {
-            margin: 20px auto;
-        }
-
-        #allQuestions {
-            font-size: 28px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 
@@ -37,7 +23,6 @@
         <h1>Answer the following Questions</h1>
         <h3>Select 5 for "strongly agree" and 1 for "strongly disagree"</h3>
 
-        <!-- <form role="form"> -->
         <div class="form-group">
             <label for="user-name">Your Name</label>
             <input type="text" class="form-control" id="user-name">
@@ -46,8 +31,6 @@
             <label for="user-picture">Link to Picture</label>
             <input type="text" class="form-control" id="user-picture">
         </div>
-        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-        <!-- </form> -->
 
         <div id="allQuestions"></div>
 
@@ -70,62 +53,8 @@
 
     </div>
 
-    <script type="text/javascript">
-        var surveyQuestions = ["Turtles are awesome", "I like spending Sundays alone", "Sushi is better than pizza", "We need more time for this homework", "Firewood smells nice", "Do you want to build a snowman?", "New Zealand is a great country", "Four hours of sleep are more than enough", "I love to fill forms", "Shrek is better than Lord of the Rings"]
+    <script type="text/javascript" src="script/script.js"></script>
 
-        generateHtml()
-
-        function generateHtml() {
-            for (i = 0; i < surveyQuestions.length; i++) {
-                var newQuestion = $("<h3>").append(surveyQuestions[i]);
-                $("#allQuestions").append(newQuestion);
-                var newAnswer = $(`<select id=question${i} name=${i}>`);
-
-                for (j = 0; j < 5; j++) {
-                    newAnswer.append(`<option value=${j + 1}>${j + 1}</option>`);
-                    $("#allQuestions").append(newAnswer);
-                }
-            }
-        }
-
-
-        $("#submit").on("click", function () {
-            event.preventDefault();
-
-            if (!$("#user-name").val().trim() || !$("#user-picture").val().trim()) {
-                $("#best-match").html("<h3>Name and picture link are required</h3>");
-            } else {
-                // console.log($("#user-name").val().trim())
-                // console.log($("#user-picture").val().trim())
-
-                var answerArray = [];
-                for (i = 0; i < surveyQuestions.length; i++) {
-                    answerArray.push(parseInt($('#question' + i).val()))
-                    // var userAnswer = $('#question' + i).val()//children("input:checked").val();
-                    // console.log(userAnswer)
-                }
-
-                var newUser = {
-                    userName: $("#user-name").val().trim(),
-                    userPicture: $("#user-picture").val().trim(),
-                    userAnswers: answerArray,
-                };
-
-                $.post("/api/friends", newUser, function (data) {
-                    $("#user-name").val("");
-                    $("#user-picture").val("");
-                    // console.log(data)
-                    var image = $(`<img src=${data.userPicture}>`)
-                    var name = $(`<h3>${data.userName}</h3>`)
-
-                    $("#best-match").html("");
-                    $("#best-match").append(name)
-                    $("#best-match").append(image)
-                })
-            }
-
-        });
-    </script>
 </body>
 
 </html>
