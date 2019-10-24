@@ -20,6 +20,9 @@ var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// * Setting up the Express App to serve css & js
+app.use(express.static(__dirname + "/app/public/"));
+
 // ================================================================================
 // ROUTER
 // The below points our server to a series of "route" files.
